@@ -1,42 +1,29 @@
-import io.railway.Railway;
-import io.railway.StreamLogsResult;
-
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 public class LogStreamer {
-
     public static void main(String[] args) {
         // Specify the path where you want to save the log file
         String logFilePath = "logs.txt";
 
         try {
-            // Connect to the Railway deployment
-            Railway railway = new Railway();
+            // Create a BufferedWriter to write logs to the file
+            BufferedWriter writer = new BufferedWriter(new FileWriter(logFilePath));
 
-            // Stream the logs
-            StreamLogsResult logsResult = railway.streamLogs().get();
+            // Execute the Railway CLI command to stream logs
+            ProcessBuilder processBuilder = new ProcessBuilder("railway", "logs", "--follow");
+            Process process = processBuilder.start();
 
-            // Open the log file for writing
-            try (BufferedWriter writer = new BufferedWriter(new FileWriter(logFilePath))) {
-                // Read logs indefinitely
-                while (true) {
-                    String logLine = logsResult.getLogs().take();
+            // Read logs from the process's input stream
+            process.getInputStream().transferTo(writer);
 
-                    // Write logs to the file
-                    writer.write(logLine);
-                    writer.newLine();
-                    writer.flush();
+            // Close the writer and wait for the process to complete
+            writer.close();
+            process.waitFor();
 
-                    // Print logs to the console
-                    System.out.println(logLine);
-                }
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        } catch (IOException | ExecutionException e) {
+            System.out.println("Log streaming completed.");
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
     }
