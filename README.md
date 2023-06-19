@@ -2,19 +2,21 @@
 
 # Log Streamer
 
-This tool allows you to stream the logs of your Railway deployment to a text file.
+This tool allows you to stream logs from a Railway deployment and save them to a text file.
 
 ## Prerequisites
-- Java 8 or above
-- The Railway library
+
+- Java Development Kit (JDK) installed on your machine
+- Railway CLI tool installed on your system and available in the system's PATH
 
 ## Usage
-1. Ensure you have Java 8 or above installed on your machine.
 
-2. Include the Railway library in your project. (Instructions: [Railway Library](https://docs.railway.app/cli/railway#library))
+1. Clone or download the Log Streamer Java project to your local machine.
 
-3. Clone this repository to your local machine.
+2. Open the project in your preferred Java development environment.
 
-4. Specify the path where you want to save the log file in the LogStreamer.java file:
+3. Specify the path where you want to save the log file in the `logFilePath` variable of the `LogStreamer` class:
    ```java
    String logFilePath = "logs.txt";
+   
+Please note that this solution assumes you have the necessary permissions to execute the Railway CLI command and write to the specified log file. Make sure you have the required access rights for a successful execution.
