@@ -12,7 +12,7 @@ public class LogStreamer {
             BufferedWriter writer = new BufferedWriter(new FileWriter(logFilePath));
 
             // Execute the Railway CLI command to stream logs
-            ProcessBuilder processBuilder = new ProcessBuilder("railway", "logs", "--follow");
+            ProcessBuilder processBuilder = new ProcessBuilder("railway logs");
             Process process = processBuilder.start();
 
             // Read logs from the process's input stream
